@@ -1,4 +1,4 @@
-Django>=2.0,<2.1
+Django>=2.2,<3.0
 django-category==2.0.0
 django-contrib-comments==1.8.0
 django-export==1.9

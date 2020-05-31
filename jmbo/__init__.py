@@ -33,6 +33,5 @@ def modify_classes():
             if module_has_submodule(mod, 'class_modifiers'):
                 raise
 
-modify_classes()
 
 default_app_config = "jmbo.apps.JmboAppConfig"

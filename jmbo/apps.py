@@ -17,4 +17,6 @@ class JmboAppConfig(AppConfig):
     name = "jmbo"
 
     def ready(self):
+        from jmbo import modify_classes # noqa
+        modify_classes()
         post_migrate.connect(do_enable_voting_on)
