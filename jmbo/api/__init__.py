@@ -11,9 +11,8 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import DjangoModelPermissions, \
     DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route
+from rest_framework.decorators import action
 from rest_framework.reverse import reverse
-from rest_framework_extras.serializers import FormMixin
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from photologue.models import PhotoSize
@@ -39,7 +38,7 @@ class PropertiesMixin(Serializer):
 
 
 class ModelBaseSerializer(
-    FormMixin, PropertiesMixin, HyperlinkedModelSerializer
+    PropertiesMixin, HyperlinkedModelSerializer
     ):
 
     class Meta:
@@ -48,7 +47,7 @@ class ModelBaseSerializer(
         fields = "__all__"
 
     def get_extra_kwargs(self):
-        # We specify a base_name at router registration and this is a way to
+        # We specify a basename at router registration and this is a way to
         # sneak in view_name so it resolves properly.
         di = super(ModelBaseSerializer, self).get_extra_kwargs()
         meta = self.Meta.model._meta
@@ -70,12 +69,12 @@ class ModelBaseObjectsViewSet(viewsets.ModelViewSet):
     )
     permission_classes = (DjangoModelPermissions,)
 
-    @detail_route(methods=["post"])
+    @action(detail=True, methods=["post"])
     def publish(self, request, pk, **kwargs):
         self.get_object().publish()
         return Response({"status": "success"})
 
-    @detail_route(methods=["post"])
+    @action(detail=True, methods=["post"])
     def unpublish(self, request, pk, **kwargs):
         self.get_object().unpublish()
         return Response({"status": "success"})
@@ -104,7 +103,7 @@ class ImageViewSet(viewsets.ModelViewSet):
     )
     permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
-    @detail_route(methods=["get"])
+    @action(detail=True, methods=["get"])
     def scales(self, request, pk, **kwargs):
         """Return link to a view that will redirect to the scaled image. This
         intermediary view is required because we usually create the scaled
@@ -144,9 +143,9 @@ def register(router, mapping=None):
             r"%s" % pth,
             klass
         )
-        # Provide a base_name to consider app_label as well
+        # Provide a basename to consider app_label as well
         router.register(
             r"%s" % pth,
             klass,
-            base_name=pth
+            basename=pth
         )

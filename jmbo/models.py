@@ -1,5 +1,7 @@
 import types
 
+from six import python_2_unicode_compatible
+
 from django.conf import settings
 from django.db import models, IntegrityError
 from django.db.models import signals, Sum
@@ -11,7 +13,6 @@ from django.contrib.sites.models import Site, SiteManager
 from django.urls import reverse, NoReverseMatch
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _, ugettext
-from django.utils.encoding import python_2_unicode_compatible
 
 from crum import get_current_request
 import django_comments

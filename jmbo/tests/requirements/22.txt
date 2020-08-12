@@ -5,7 +5,7 @@ django-export==1.9
 django-layers-hr==1.11.1
 django-likes==2.0.0
 django-object-tools==1.9
-django-photologue==3.8.0
+django-photologue==3.12
 django-preferences==0.0.2
 django-secretballot==1.0.0
 django-sites-groups==1.9.1

@@ -30,7 +30,6 @@ INSTALLED_APPS = (
     "photologue",
     "preferences",
     "rest_framework",
-    "rest_framework_extras",
     "secretballot",
     "sites_groups",
     "ultracache",

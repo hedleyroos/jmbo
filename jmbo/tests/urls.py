@@ -2,7 +2,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from rest_framework import routers
-import rest_framework_extras
 
 from jmbo.views import ObjectDetail, ObjectList
 from jmbo import api as jmbo_api
@@ -12,8 +11,6 @@ from jmbo.tests import api as tests_api
 admin.autodiscover()
 
 router = routers.SimpleRouter()
-rest_framework_extras.discover(router)
-rest_framework_extras.register(router)
 
 jmbo_api.register(router)
 tests_api.register(router)

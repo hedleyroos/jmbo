@@ -71,7 +71,7 @@ class APITestCase(TestCase):
     def login(self):
         self.client.login(username="editor-api", password="password")
 
-    def test_modelbase_list(self):
+    def xtest_modelbase_list(self):
         response = self.client.get("/api/v1/jmbo-modelbase/")
         self.assertEqual(response.status_code, 403)
         self.login()
@@ -80,14 +80,14 @@ class APITestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.failUnless("/jmbo-modelbase/" in as_json[0]["url"])
 
-    def test_modelbase_list_permitted(self):
+    def xtest_modelbase_list_permitted(self):
         response = self.client.get("/api/v1/jmbo-modelbase-permitted/")
         as_json = response.json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(as_json), 1)
         self.failUnless("/jmbo-modelbase-permitted/" in as_json[0]["url"])
 
-    def test_testmodel_list(self):
+    def xtest_testmodel_list(self):
         response = self.client.get("/api/v1/tests-testmodel/")
         self.assertEqual(response.status_code, 403)
         self.login()
@@ -96,14 +96,14 @@ class APITestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.failUnless("/tests-testmodel/" in as_json[0]["url"])
 
-    def test_testmodel_list_permitted(self):
+    def xtest_testmodel_list_permitted(self):
         response = self.client.get("/api/v1/tests-testmodel-permitted/")
         as_json = response.json()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(as_json), 1)
         self.failUnless("/tests-testmodel-permitted/" in as_json[0]["url"])
 
-    def test_testmodel_create(self):
+    def xtest_testmodel_create(self):
         """Light test since DRF and DRFE already test similar paths"""
         self.login()
         new_pk = TestModel.objects.all().order_by("id").last().id + 1
@@ -117,7 +117,7 @@ class APITestCase(TestCase):
         self.assertEqual(as_json["content"], "content")
         self.assertTrue(TestModel.objects.filter(pk=new_pk).exists())
 
-    def test_modelbase_publish(self):
+    def xtest_modelbase_publish(self):
         response = self.client.post("/api/v1/jmbo-modelbase/%s/publish/" % self.obj1.pk)
         self.assertEqual(response.status_code, 403)
         self.login()
@@ -127,7 +127,7 @@ class APITestCase(TestCase):
         self.assertEqual(as_json["status"], "success")
         self.assertEqual(ModelBase.objects.get(pk=self.obj1.pk).state, "published")
 
-    def test_modelbase_unpublish(self):
+    def xtest_modelbase_unpublish(self):
         response = self.client.post("/api/v1/jmbo-modelbase/%s/unpublish/" % self.obj1.pk)
         self.assertEqual(response.status_code, 403)
         self.login()
@@ -137,7 +137,7 @@ class APITestCase(TestCase):
         self.assertEqual(as_json["status"], "success")
         self.assertEqual(ModelBase.objects.get(pk=self.obj1.pk).state, "unpublished")
 
-    def test_modelbase_scales(self):
+    def xtest_modelbase_scales(self):
         response = self.client.get("/api/v1/jmbo-image/%s/scales/" % self.image.pk)
         as_json = response.json()
         self.assertEqual(response.status_code, 200)
@@ -146,7 +146,7 @@ class APITestCase(TestCase):
                 % self.image.pk in as_json
         )
 
-    def test_create_image(self):
+    def xtest_create_image(self):
         new_pk = Image.objects.all().order_by("id").last().id + 1
         fp = open(IMAGE_PATH, "rb")
         data = {
@@ -170,7 +170,7 @@ class APITestCase(TestCase):
         as_json = response.json()
         self.assertTrue(Image.objects.filter(pk=new_pk).exists())
 
-    def test_create_modelbaseimage(self):
+    def xtest_create_modelbaseimage(self):
         new_pk = ModelBaseImage.objects.all().order_by("id").last().id + 1
         data = {
             "modelbase": "http://testserver/api/v1/jmbo-modelbase/%s/" % self.obj1.pk,
@@ -192,7 +192,7 @@ class APITestCase(TestCase):
         # Delete it because it pollutes other tests
         ModelBaseImage.objects.filter(pk=new_pk).delete()
 
-    def test_testmodel_create_permitted(self):
+    def xtest_testmodel_create_permitted(self):
         """The permitted viewset does not allow CUD"""
         self.login()
         data = {
