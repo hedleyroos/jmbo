@@ -15,7 +15,7 @@ setup(
         # The bare minimum requirements. The tests use explicit versions.
         "Pillow",
         "pytz",
-        "django>=1.10",
+        "django>=2",
         "django-category>=2.0.0",
         "django-contrib-comments>=1.8.0",
         "django-layers-hr>=1.11.1",
@@ -27,7 +27,7 @@ setup(
         "django-sortedm2m>=1.4.0",
         "django-ultracache>=1.11.10",
         "django-crum",
-        "dj-pagination",
+        "dj-pagination>=2.5.0",
     ],
     include_package_data=True,
     classifiers=[
