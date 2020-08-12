@@ -12,6 +12,7 @@ from django.contrib.sites.models import Site
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseForbidden
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 
 from category.models import Category
@@ -90,10 +91,9 @@ class ImageAdmin(admin.ModelAdmin):
     inlines = (ImageOverrideInline,)
 
     def _thumb(self, obj):
-        return """<img src="%(url)s" />""" % \
-            {"url": obj.get_thumbnail_url()}
+        return mark_safe("""<img src="%(url)s" />""" % \
+            {"url": obj.get_thumbnail_url()})
     _thumb.short_description = _("Thumbnail")
-    _thumb.allow_tags = True
 
     def _links(self, obj):
         s = """<a href="%(url)s">%(url)s</a>
@@ -108,10 +108,9 @@ class ImageAdmin(admin.ModelAdmin):
             s += """<li><a href="%(url)s">%(url)s</a></li>""" % \
                 {"url": obj._get_SIZE_url(name)}
         s += "</ul>"
-        return s
+        return mark_safe(s)
 
     _links.short_description = _("Link(s)")
-    _links.allow_tags = True
 
 
 class ModelBaseAdminForm(forms.ModelForm):
@@ -352,9 +351,8 @@ class ModelBaseAdmin(admin.ModelAdmin):
         for site in obj.sites.all():
             result += '<li><a href="http://%s%s" target="public">%s</a></li>' % (site.domain, url, site.domain)
         result += '</ul>'
-        return result
+        return mark_safe(result)
     _get_absolute_url.short_description = 'Permalink'
-    _get_absolute_url.allow_tags = True
 
     def _actions(self, obj):
         # Deliberately add simple inline javascript here to avoid having to
@@ -370,9 +368,8 @@ Publish</a><br />''' % (url, url)
             result += '''<a href="%s" \
 onclick="django.jQuery.get('%s'); django.jQuery(this).replaceWith('Unpublished'); return false;">
 Unpublish</a><br />''' % (url, url)
-        return result
+        return mark_safe(result)
     _actions.short_description = 'Actions'
-    _actions.allow_tags = True
 
     def publish_ajax(self, request):
         obj = ModelBase.objects.get(id=request.GET["id"])
