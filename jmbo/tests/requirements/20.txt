@@ -17,7 +17,7 @@ psycopg2==2.8.5
 pytz==2016.4
 PyYAML==3.11
 requests==2.10.0
-djangorestframework==3.8.0
+djangorestframework==3.9.0
 djangorestframework-extras==0.3.0
 six==1.9.0
 django-crum==0.7.1

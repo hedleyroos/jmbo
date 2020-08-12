@@ -4,8 +4,8 @@ Changelog
 next
 ----
 #. Remove unmaintained `django-pagination-fork` dependency and replace with ``dj-pagination``.
-#. Add Python 3.5 tests.
-#. Drop Django 1.9 support.
+#. Add Python 3.5+ tests.
+#. Drop Django 1.x support.
 
 3.0.5
 -----
